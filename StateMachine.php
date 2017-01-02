@@ -14,6 +14,16 @@ class StateMachine {
     ];
     private $matrix = [];
 
+    function applyTransition($transitionName) {
+        if ($this->canTransition($transitionName) == false) {
+            return false;
+        }
+        $transition = $this->config['transitions'][$transitionName];
+        $to = $transition['to'];
+        $this->setState($to);
+        return true;
+    }
+
     function canState($desiredState) {
         $state = $this->getState();
         if (in_array($state . '-' . $desiredState, $this->matrix)) {
@@ -35,14 +45,8 @@ class StateMachine {
         return false;
     }
 
-    function applyTransition($transitionName) {
-        if ($this->canTranstion($transitionName) == false) {
-            return false;
-        }
-        $transition = $this->config['transitions'][$transitionName];
-        $to = $transition['to'];
-        $this->setState($to);
-        return true;
+    function getHistory() {
+        return $this->memory['history'];
     }
 
     function getPossibleTransitions() {
@@ -56,20 +60,12 @@ class StateMachine {
         return $possibleTransitions;
     }
 
-    function setState($state) {
-        $this->memory['state'] = $state;
-    }
-
     function getState() {
         return $this->memory['state'];
     }
 
     function fromString($string) {
         $this->memory = json_decode($string, true);
-    }
-
-    function toString() {
-        return json_encode($this->memory);
     }
 
     function setConfig($config) {
@@ -91,6 +87,15 @@ class StateMachine {
             return $this->config;
         }
 
+    }
+
+    function setState($state) {
+        $this->memory['state'] = $state;
+        $this->memory['history'][] = $state;
+    }
+
+    function toString() {
+        return json_encode($this->memory);
     }
 
 }
