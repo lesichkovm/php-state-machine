@@ -1,0 +1,96 @@
+<?php
+
+namespace App\Helpers;
+
+class StateMachine {
+
+    private $memory = [
+        'state' => 'uninitialized',
+        'history' => []
+    ];
+    private $config = [
+        'states' => [],
+        'transtions' => []
+    ];
+    private $matrix = [];
+
+    function canState($desiredState) {
+        $state = $this->getState();
+        if (in_array($state . '-' . $desiredState, $this->matrix)) {
+            return true;
+        }
+        return false;
+    }
+
+    function canTransition($transitionName) {
+        $state = $this->getState();
+        $transition = $this->config['transitions'][$transitionName];
+        $fromArray = is_array($transition['from']) ? $transition['from'] : [$transition['from']];
+        $to = $transition['to'];
+        if (in_array($this->getState(), $fromArray)) {
+            if (in_array($state . '-' . $to, $this->matrix)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function applyTransition($transitionName) {
+        if ($this->canTranstion($transitionName) == false) {
+            return false;
+        }
+        $transition = $this->config['transitions'][$transitionName];
+        $to = $transition['to'];
+        $this->setState($to);
+        return true;
+    }
+
+    function getPossibleTransitions() {
+        $possibleTransitions = [];
+        foreach ($this->config['transitions'] as $name => $transition) {
+            $fromArray = is_array($transition['from']) ? $transition['from'] : [$transition['from']];
+            if (in_array($this->getState(), $fromArray)) {
+                $possibleTransitions[] = $name;
+            }
+        }
+        return $possibleTransitions;
+    }
+
+    function setState($state) {
+        $this->memory['state'] = $state;
+    }
+
+    function getState() {
+        return $this->memory['state'];
+    }
+
+    function fromString($string) {
+        $this->memory = json_decode($string, true);
+    }
+
+    function toString() {
+        return json_encode($this->memory);
+    }
+
+    function setConfig($config) {
+        $this->config = $config;
+        $this->setState($this->config['states'][0]);
+        /*
+         * Generate Hash Matrix
+         * from-to
+         */
+        foreach ($this->config['transitions'] as $transition) {
+            $fromArray = is_array($transition['from']) ? $transition['from'] : [$transition['from']];
+            $to = $transition['to'];
+            foreach ($fromArray as $from) {
+                $this->matrix[] = $from . '-' . $to;
+            }
+        }
+
+        function getConfig() {
+            return $this->config;
+        }
+
+    }
+
+}
