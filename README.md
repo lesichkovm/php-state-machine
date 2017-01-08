@@ -33,6 +33,41 @@ $stateMachine = new \App\Helpers\StateMachine;
 $stateMachine->setConfig($config);
 ```
 
+## Get Current State
+
+PSM will give you the current state
+
+```php
+var_dump($stateMachine->getState());
+```
+
+## Check if Transition can be Applied
+
+Before applying a transition, check whether it can be applied
+
+```php
+// Return true, we can apply this transition
+var_dump($stateMachine->canTransition('create'));
+var_dump($stateMachine->applyTransition('create'));
+```
+
+## Get Possible Transitions
+
+PSM can easily show the possible transitions from the current state
+
+```php
+// All possible transitions for pending state are just "confirm"
+var_dump($stateMachine->getPossibleTransitions());
+```
+
+## Get History
+
+PSM keeps track of the history.
+
+```php
+var_dump($stateMachine->getHistory());
+```
+
 ## Persisting State
 
 The PSM makes it easy to persist the state to a file or database, and restore later.
