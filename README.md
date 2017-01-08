@@ -29,6 +29,8 @@ $config = [
         )
     ),
 ];
+$stateMachine = new \App\Helpers\StateMachine;
+$stateMachine->setConfig($config);
 ```
 
 ## Persisting State
@@ -38,13 +40,13 @@ The PSM makes it easy to persist the state to a file or database, and restore la
 ### Saving PSM to File
 
 ```php
-$sm = new StateMachine();
-file_put_contents('sm.json', $sm->toString());
+$stateMachine = new StateMachine();
+file_put_contents('sm.json', $stateMachine->toString());
 ```
 
 ### Restoring PSM from File
 
 ```php
-$sm = new StateMachine();
-$sm->fromString(json_decode(file_get_contents('sm.json'), true));
+$stateMachine = new StateMachine();
+$stateMachine->fromString(json_decode(file_get_contents('sm.json'), true));
 ```
