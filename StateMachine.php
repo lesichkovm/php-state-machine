@@ -1,7 +1,5 @@
 <?php
 
-namespace App\Helpers;
-
 class StateMachine {
 
     private $memory = [
