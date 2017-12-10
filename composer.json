@@ -1,0 +1,22 @@
+{
+    "name": "lesichkovm/php-state-machine",
+    "description": "State machine",
+    "version": "1.0.0",
+    "type": "library",
+    "keywords": ["state", "machine", "php", "lesichkov"],    
+    "homepage": "http://github.com/lesichkovm/php-state-machine",
+    "license": "commercial",
+    "authors": [
+        {
+            "name": "Milan Lesichkov",
+            "email": "lesichkovm@gmail.com",
+            "homepage": "http://lesichkov.co.uk",
+            "role": "Lead Developer"
+        }
+    ],
+    "autoload": {
+        "files": ["StateMachine.php"]
+    },
+     "require": {
+    }
+}
