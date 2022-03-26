@@ -43,6 +43,10 @@ class StateMachine {
         return false;
     }
 
+    function getConfig() {
+        return $this->config;
+    }
+
     function getHistory() {
         return $this->memory['history'];
     }
@@ -79,10 +83,6 @@ class StateMachine {
             foreach ($fromArray as $from) {
                 $this->matrix[] = $from . '-' . $to;
             }
-        }
-
-        function getConfig() {
-            return $this->config;
         }
 
     }
