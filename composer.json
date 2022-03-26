@@ -5,7 +5,7 @@
     "type": "library",
     "keywords": ["state", "machine", "php", "lesichkov"],    
     "homepage": "http://github.com/lesichkovm/php-state-machine",
-    "license": "commercial",
+    "license": "proprietary",
     "authors": [
         {
             "name": "Milan Lesichkov",
