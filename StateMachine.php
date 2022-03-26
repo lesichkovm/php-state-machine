@@ -17,6 +17,13 @@ class StateMachine {
             return false;
         }
         $transition = $this->config['transitions'][$transitionName];
+        
+        $isValid = $this->validateTransition($transition);
+
+        if ($isValid == false) {
+            return false;
+        }
+        
         $to = $transition['to'];
         $this->setState($to);
         return true;
@@ -30,11 +37,34 @@ class StateMachine {
         return false;
     }
 
+    function validateTransition(array $transition) {
+        $validators = $transition['validators'] ?? [];
+        
+        if (count($validators) < 1) {
+            return true;
+        }
+        
+        foreach ($validators as $validator) {
+            $isOk = call_user_func($validator);
+            if ($isOk == false) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     function canTransition($transitionName) {
         $state = $this->getState();
         $transition = $this->config['transitions'][$transitionName];
         $fromArray = is_array($transition['from']) ? $transition['from'] : [$transition['from']];
         $to = $transition['to'];
+        
+        $isValid = $this->validateTransition($transition);
+
+        if ($isValid == false) {
+            return false;
+        }
+
         if (in_array($this->getState(), $fromArray)) {
             if (in_array($state . '-' . $to, $this->matrix)) {
                 return true;
@@ -84,7 +114,6 @@ class StateMachine {
                 $this->matrix[] = $from . '-' . $to;
             }
         }
-
     }
 
     function setState($state) {
