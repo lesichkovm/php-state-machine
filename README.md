@@ -1,7 +1,7 @@
 # PHP State Machine (PSM)
 
 
-[![Tests Status](https://github.com/lesichkovm/php-state-machine/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/lesichkovm/php-state-machine/actions/workflows/test.yml)
+[![Tests Status](https://github.com/lesichkovm/php-state-machine/actions/workflows/php.yml/badge.svg?branch=master)](https://github.com/lesichkovm/php-state-machine/actions/workflows/php.yml)
 
 The PHP State Machine (PSM) is a state machine that is easy to understand and implement.
 
