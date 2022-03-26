@@ -1,7 +1,6 @@
 {
     "name": "lesichkovm/php-state-machine",
     "description": "State machine",
-    "version": "1.0.0",
     "type": "library",
     "keywords": ["state", "machine", "php", "lesichkov"],    
     "homepage": "http://github.com/lesichkovm/php-state-machine",
