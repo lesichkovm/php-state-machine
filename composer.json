@@ -16,7 +16,7 @@
     "autoload": {
         "files": ["StateMachine.php"]
     },
-     "require-dev": {
+    "require-dev": {
         "phpunit/phpunit": "^9.5"
     },
     "scripts": {
